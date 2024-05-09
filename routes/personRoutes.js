@@ -7,7 +7,7 @@ const Person = require("./../Models/Person");
 // get for data fetching
 // post for saving the data
 //put for updating the data
-//Now you can do the all the Crud Operations 
+//Now you can do the all the Crud Operations
 
 router.post("/", async (req, res) => {
   try {
