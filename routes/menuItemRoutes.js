@@ -31,4 +31,32 @@ router.post("/", async (req, res) => {
   }
 });
 
+//you can also do for update and Delete 
+//you can also do for delete 
+
+
+// router.put("/", async (req, res) => {
+//   try {
+//     const data = await Menu.find();
+//     console.log("Data Fetched");
+//     res.status(200).json(data);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: "Inetrenal servere error" });
+//   }
+// });
+
+
+// router.delete("/", async (req, res) => {
+//   try {
+//     const data = await Menu.find();
+//     console.log("Data Fetched");
+//     res.status(200).json(data);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: "Inetrenal servere error" });
+//   }
+// });
+
+
 module.exports = router;
