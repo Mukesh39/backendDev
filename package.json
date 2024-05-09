@@ -1,0 +1,19 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "It is node project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mukesh Kumar",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.3",
+    "install": "^0.13.0",
+    "lodash": "^4.17.21",
+    "mongoose": "^8.2.1",
+    "nodemon": "^3.1.0"
+  }
+}
