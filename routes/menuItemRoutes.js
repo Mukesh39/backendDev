@@ -31,9 +31,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-//you can also do for update and Delete 
-//you can also do for delete 
-
+//you can also do for update and Delete
+//you can also do for delete
 
 // router.put("/", async (req, res) => {
 //   try {
@@ -46,7 +45,6 @@ router.post("/", async (req, res) => {
 //   }
 // });
 
-
 // router.delete("/", async (req, res) => {
 //   try {
 //     const data = await Menu.find();
@@ -58,5 +56,6 @@ router.post("/", async (req, res) => {
 //   }
 // });
 
-
 module.exports = router;
+
+//comment added
