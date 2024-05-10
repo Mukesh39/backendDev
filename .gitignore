@@ -6,3 +6,6 @@
 #ignore the modules directly 
 
 node_modules/
+
+#enf files 
+.env

@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
-const PORT = 3000;
 const db = require("./db");
+require("dotenv").config();
+
+const PORT = process.env.PORT || 3000;
 
 const bodyparser = require("body-parser");
 app.use(bodyparser.urlencoded({ extended: true }));
@@ -33,5 +35,5 @@ const menuRoutes = require("./routes/menuItemRoutes");
 app.use("/menu", menuRoutes);
 
 app.listen(PORT, () => {
-  console.log("the app is running at" + `${PORT}`);
+  console.log(`The app is running at http://localhost:${PORT}`);
 });
