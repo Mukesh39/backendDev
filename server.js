@@ -2,23 +2,25 @@ const express = require("express");
 const app = express();
 const db = require("./db");
 require("dotenv").config();
+const bodyParser = require("body-parser");
 
 const PORT = process.env.PORT || 3000;
 
 const passport = require("./auth");
 
-const bodyparser = require("body-parser");
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 
-//middleware 
+//middleware
 
 const logRequest = (req, res, next) => {
   console.log(
     `  ${new Date().toLocaleString()}  Requests Made  to : ${req.originalUrl} `
   );
 
-  next(); // inthe case of Midlleware next function calling is very important always.
+  next();
+
+  // inthe case of Midlleware next function calling is very important always.
   //very importany To skip the rest of the middleware functions from a router middleware stack, call next('route') to pass control to the next route. NOTE: next('route') will work only in middleware functions that were loaded by using the app.METHOD() or router.METHOD() functions.
 };
 
@@ -27,7 +29,7 @@ app.use(logRequest);
 const localAuthMiddleware = passport.authenticate("local", { session: false });
 
 app.get("/", (req, res) => {
-  res.send("Welcome to our Hotels "); 
+  res.send("Welcome to our Hotels ");
 });
 
 ///post with the help of this we save the data
@@ -48,12 +50,9 @@ app.get("/", (req, res) => {
 app.use(passport.initialize());
 
 const personRoutes = require("./routes/personRoutes");
-
-app.use("/person", localAuthMiddleware, personRoutes);
-
 const menuRoutes = require("./routes/menuItemRoutes");
 
-
+app.use("/person", personRoutes);
 app.use("/menu", menuRoutes);
 
 app.listen(PORT, () => {
@@ -61,7 +60,3 @@ app.listen(PORT, () => {
 });
 
 //mongodb://127.0.0.1:27017/db
-
-
-
-

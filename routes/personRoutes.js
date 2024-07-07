@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Person = require("./../Models/Person");
+const { jwtAuthMiddleware, generateToken } = require("./../jwt");
 
 //above line is going to manage the various end points  /earlier it was like the so much complex things
 
@@ -9,17 +10,49 @@ const Person = require("./../Models/Person");
 //put for updating the data
 //Now you can do the all the Crud Operations
 
-router.post("/", async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
     const data = req.body;
+
     const newPerson = new Person(data);
     const response = await newPerson.save();
-
     console.log("data Saved");
-    res.status(200).json(response);
+    const token = generateToken(response.username);
+    console.log("Token is", token);
+    res.status(200).json({ response: response, token: token });
+
+    // you will see the response in json format with token in postman , with username and  and token there
   } catch (err) {
     //if failed it will go to catch Block
 
+    console.log(err);
+    res.status(500).json({ error: "Inetrenal servere error" });
+  }
+});
+
+router.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    // find the user by username
+    const user = await Person.findOne({ username: username });
+
+    //if user doesnot exist and password doesn't match
+    if (!user || !(await user.comparePassword(password))) {
+      res.status(401).json({ error: "invalid username and password" });
+    }
+
+    //generate Token
+
+    const payload = {
+      id: user.id,
+      username: user.username,
+    };
+
+    const token = generateToken(payload);
+    res.json({ token });
+  } catch (err) {
+    //if failed it will go to catch Block
     console.log(err);
     res.status(500).json({ error: "Inetrenal servere error" });
   }
@@ -33,6 +66,31 @@ router.get("/", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Inetrenal servere error" });
+  }
+});
+
+// GET /profile - access user profile with token
+router.get("/profile", jwtAuthMiddleware, async (req, res) => {
+  try {
+    const userData = req.user;
+    //req.user will get from the jwt file
+    // Extract user ID from the JWT payload
+    console.log("User data ", userData);
+
+    const userId = req.user.id; // Extract user ID from the JWT payload
+
+    // Find the user by ID
+    const user = await Person.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Return the user's profile data
+    res.status(200).json({ user });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

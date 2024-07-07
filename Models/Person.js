@@ -48,8 +48,6 @@ const PersonSchema = new mongoose.Schema({
   },
 });
 
-
-
 PersonSchema.pre("save", async function (next) {
   const person = this;
 
@@ -68,7 +66,7 @@ PersonSchema.pre("save", async function (next) {
   }
 });
 
-// personSchema.methods.comparePassword this explains the methdos avaiable to person instances than applying the method called comapreMethod 
+// personSchema.methods.comparePassword this explains the methdos avaiable to person instances than applying the method called comapreMethod
 
 PersonSchema.methods.comparePassword = async function (candidatePassword) {
   try {
